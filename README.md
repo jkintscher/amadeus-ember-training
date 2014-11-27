@@ -1,6 +1,9 @@
-# Simple blog application
+# Simple Ember Blog Application
 
 **Client-side only, no server!**
+
+Use any version of Ember you like. No need to use Ember Data, but do so if you
+like. Also, since we didn’t cover it yet, no need for tests (boo!).
 
 ## Requirements
 
