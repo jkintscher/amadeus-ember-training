@@ -9,21 +9,54 @@
 </head>
 <body>
   <script type="text/x-handlebars">
-    <h2>Amadeus Blog</h2>
+    <div class="container">
+      <div class="page-header">
+        <h1>Amadeus Blog <small>created by Ember.js</small></h1>
+      </div>
 
-    {{outlet}}
+      {{ outlet }}
+    </div>
   </script>
 
-  <script type="text/x-handlebars" id="index">
-    <ul>
-    {{#each post in model}}
-      <li>
-        <strong>{{post.title}}</strong>
-        <i>Posted by {{post.author}} on {{post.date}}</i>
-        <p>{{post.excerpt}}</p>
-      </li>
-    {{/each}}
-    </ul>
+  <script type="text/x-handlebars" id="posts">
+    <div class="panel panel-default" id="posts-list">
+      <div class="panel-heading">
+        <h3 class="panel-title">Recent posts</h3>
+      </div>
+      <div class="panel-body">
+        <ul class="list-unstyled">
+          {{#each post in model}}
+            {{#link-to 'post' post.id}}
+              <li>
+                <strong>{{post.title}}</strong>
+                <small><em>Posted by {{post.author}} on {{post.date}}</em></small>
+                <small>{{post.excerpt}}</small>
+              </li>
+            {{/link-to}}
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+
+    {{ outlet }}
+  </script>
+
+  <script type="text/x-handlebars" id="post">
+    <div class="panel panel-default" id="post-container">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{title}}</h3>
+      </div>
+      <div class="panel-body">
+        {{body}}
+      </div>
+      <br>
+      <ul class="list-group">
+        <li class="list-group-item"><strong>Comments</strong></li>
+        {{#each item in comments}}
+          <li class="list-group-item">{{item.visiter}}: {{item.comment}}</li>
+        {{/each}}
+      </ul>
+    </div>
   </script>
 
   <script src="js/libs/jquery-1.10.2.js"></script>
