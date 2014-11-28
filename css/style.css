@@ -1,8 +1,11 @@
-#posts-list {
+.posts-list {
 	width: 20%;
 	float: left;
 }
-#post-container {
+.post-container {
 	width: 78%;
+	float: right;
+}
+.glyphicon {
 	float: right;
 }

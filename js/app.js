@@ -35,11 +35,35 @@ App.PostRoute = Ember.Route.extend({
   }
 });
 
+App.PostsNewRoute = Ember.Route.extend({
+  model: function() {
+    return posts;
+  }
+});
+
+App.PostsNewController = Ember.Controller.extend({
+	actions: {
+		addNewPost: function(title, excerpt, body) {
+			var newPost = {
+				id: Date.now(),
+				title: title,
+				author: "Amadeus",
+				date: new Date(),
+				excerpt: excerpt,
+				body: body,
+				comments: []
+			};
+			posts.push(newPost);
+			this.set('model', posts);
+		}
+	}
+});
+
 var posts = [{
 	id: '1',
 	title: "Happy birthday Yaohua",
 	author: "Amadeus",
-	date: '2014-10-13',
+	date: new Date('2014-10-13'),
 	excerpt: "Say happy birthday to Yaohua !",
 	body: "Today is the birthday of our dear collegue Yaohua, let's celebrate it !",
 	comments: [
@@ -49,7 +73,7 @@ var posts = [{
 	id: '2',
 	title: "Happy birthday Ali",
 	author: "Amadeus",
-	date: '2014-11-11',
+	date: new Date('2015-01-12'),
 	excerpt: "Say happy birthday to Ali !",
 	body: "Today is the birthday of our dear collegue Ali, let's celebrate it !",
 	comments: [
@@ -59,7 +83,7 @@ var posts = [{
 	id: '3',
 	title: "Happy birthday Joschka",
 	author: "Amadeus",
-	date: '2014-12-24',
+	date: new Date('2014-12-24'),
 	excerpt: "Say happy birthday to Joschka !",
 	body: "Today is the birthday of our dear collegue Joschka, let's celebrate it !",
 	comments: [
