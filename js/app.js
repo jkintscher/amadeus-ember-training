@@ -55,6 +55,10 @@ App.PostsNewController = Ember.Controller.extend({
   }
 });
 
+Ember.Handlebars.registerBoundHelper('format-date', function(format, date) {
+  return moment(date).format(format);
+});
+
 App.Post = DS.Model.extend({
   title: DS.attr('string'),
   author: DS.attr('string'),
