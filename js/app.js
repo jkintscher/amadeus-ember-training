@@ -8,6 +8,7 @@ App.Router.map(function() {
   
 		this.resource('post', { path: '/post/:post_id' }, function() {
 	    this.route('edit');
+	    this.resource('comments')
 	  });
 	});
 });
@@ -57,6 +58,10 @@ App.PostsNewController = Ember.Controller.extend({
 			this.set('model', posts);
 		}
 	}
+});
+
+Ember.Handlebars.registerBoundHelper('format-date', function(format, date) {
+  return moment(date).format(format);
 });
 
 var posts = [{

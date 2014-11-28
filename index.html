@@ -32,8 +32,8 @@
             {{#link-to 'post' post.id}}
               <li>
                 <strong>{{post.title}}</strong>
-                <small><em>Posted by {{post.author}} on {{post.date}}</em></small>
-                <small>{{post.excerpt}}</small>
+                <small><em>Posted by {{post.author}} on {{format-date "LLL" post.date}}</em></small>
+                <p><small>{{post.excerpt}}</small></p>
               </li>
             {{/link-to}}
           {{/each}}
@@ -77,6 +77,7 @@
   <script src="js/libs/jquery-1.10.2.js"></script>
   <script src="js/libs/handlebars-v1.3.0.js"></script>
   <script src="js/libs/ember-1.8.1.js"></script>
+  <script src="js/libs/moment.min.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
