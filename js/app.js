@@ -37,6 +37,20 @@ App.PostRoute = Ember.Route.extend({
   }
 });
 
+App.PostController = Ember.Controller.extend({
+  actions: {
+    deletePost: function () {
+      debugger;
+      this.store.find('post', this.model.id).then(function (post) {
+        post.deleteRecord();
+        post.get('isDeleted');
+        post.save();
+      });
+      this.transitionTo('posts');
+    }
+  }
+});
+
 App.PostsNewController = Ember.Controller.extend({
   actions: {
     addNewPost: function (title, excerpt, body) {
@@ -51,6 +65,7 @@ App.PostsNewController = Ember.Controller.extend({
 
       var record = this.store.createRecord('post', newPost);
       record.save();
+      this.transitionTo('post', record.id);
     }
   }
 });
