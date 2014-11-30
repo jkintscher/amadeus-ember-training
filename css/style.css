@@ -9,7 +9,7 @@
 .glyphicon {
 	float: right;
 }
-.panel-heading button {
+.btn.btn-link {
 	float: right;
 	padding: 0;
 }

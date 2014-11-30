@@ -71,7 +71,12 @@
         </div>
         <br>
         <ul class="list-group">
-          <li class="list-group-item"><strong>Comments</strong></li>
+          <li class="list-group-item">
+            <strong>Comments</strong>
+            <button class="btn btn-link" {{action 'addComment'}}>
+              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </button>
+          </li>
           {{#each item in this.model.comments}}
             <li class="list-group-item">{{item.visiter}}: {{item.comment}}</li>
           {{/each}}

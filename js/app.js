@@ -85,10 +85,18 @@ App.PostController = Ember.Controller.extend({
         post.set('excerpt', excerpt);
         post.set('body', body);
         post.set('date', new Date());
-        post.save();
       });
       this.set('isEditing', false);
       this.transitionTo('post', post.id);
+    },
+    addComment: function () {
+      var msg = prompt("Your comment:", "Hi");
+      if (msg != "") {
+        this.store.find('post', this.model.id).then(function (post) {
+          var comment = {visiter: "unknown", comment: msg}; 
+          post.get('comments').pushObject(comment);
+        }); 
+      }
     }
   }
 });
