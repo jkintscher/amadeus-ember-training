@@ -37,20 +37,6 @@ App.PostRoute = Ember.Route.extend({
   }
 });
 
-App.PostController = Ember.Controller.extend({
-  actions: {
-    deletePost: function () {
-      debugger;
-      this.store.find('post', this.model.id).then(function (post) {
-        post.deleteRecord();
-        post.get('isDeleted');
-        post.save();
-      });
-      this.transitionTo('posts');
-    }
-  }
-});
-
 App.PostsNewController = Ember.Controller.extend({
   actions: {
     addNewPost: function (title, excerpt, body) {
@@ -62,10 +48,47 @@ App.PostsNewController = Ember.Controller.extend({
         body: body,
         comments: []
       };
-
       var record = this.store.createRecord('post', newPost);
       record.save();
       this.transitionTo('post', record.id);
+    },
+    cancelAdd: function () {
+      this.transitionTo('post', this.model.get('firstObject').id);
+    }
+  }
+});
+
+App.PostController = Ember.Controller.extend({
+  isEditing: false,
+  actions: {
+    deletePost: function () {
+      if (confirm("Sure to delete this post?")) {
+        this.store.find('post', this.model.id).then(function (post) {
+          post.deleteRecord();
+          post.get('isDeleted');
+          post.save();
+        });
+        this.transitionTo('posts');
+      } else {
+          return;
+      }
+    },
+    editPost: function () {
+      this.set('isEditing', true);
+    },
+    cancelEdit: function () {
+      this.set('isEditing', false);
+    },
+    updatePost: function (title, excerpt, body) {
+      this.store.find('post', this.model.id).then(function (post) {
+        post.set('title', title);
+        post.set('excerpt', excerpt);
+        post.set('body', body);
+        post.set('date', new Date());
+        post.save();
+      });
+      this.set('isEditing', false);
+      this.transitionTo('post', post.id);
     }
   }
 });
