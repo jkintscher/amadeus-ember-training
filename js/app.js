@@ -43,7 +43,10 @@ App.PostRoute = Ember.Route.extend({
 App.PostsNewController = Ember.Controller.extend({
   actions: {
     addNewPost: function (title, excerpt, body) {
+    	debugger;
+    	var id = parseInt(this.model.sortBy('id').get('lastObject').id) + 1;
       var newPost = {
+      	id: id,
         title: title,
         author: "Amadeus",
         date: new Date(),
