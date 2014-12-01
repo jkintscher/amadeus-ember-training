@@ -24,7 +24,7 @@ App.PostsRoute = Ember.Route.extend({
   model: function () {
     return this.store.find('post');
   },
-  afterModel: function(posts, transition) {
+  afterModel: function(posts) {
     if (posts.get('length') >= 1) {
       this.transitionTo('post', posts.get('firstObject'));
     }
@@ -81,9 +81,12 @@ App.PostController = Ember.Controller.extend({
     },
     updatePost: function (title, excerpt, body) {
       this.store.find('post', this.model.id).then(function (post) {
-        post.set('title', title);
-        post.set('excerpt', excerpt);
-        post.set('body', body);
+      	if(title != '' && title != null)
+       		post.set('title', title);
+       	if(excerpt != '' && excerpt != null)
+        	post.set('excerpt', excerpt);
+      	if(body != '' && body != null)
+        	post.set('body', body);
         post.set('date', new Date());
       });
       this.set('isEditing', false);
@@ -97,6 +100,15 @@ App.PostController = Ember.Controller.extend({
           post.get('comments').pushObject(comment);
         }); 
       }
+    },
+    deleteComment: function (comment) {
+    	if (confirm("Sure to delete this comment?")) {
+	      this.store.find('post', this.model.id).then(function (post) {
+	        post.get('comments').removeObject(comment);
+	      }); 
+	    } else {
+	    	return;
+	    }
     }
   }
 });

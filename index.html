@@ -78,7 +78,12 @@
             </button>
           </li>
           {{#each item in this.model.comments}}
-            <li class="list-group-item">{{item.visiter}}: {{item.comment}}</li>
+            <li class="list-group-item">
+              {{item.visiter}}: {{item.comment}}
+              <button class="btn btn-link" {{action 'deleteComment' item}}>
+                <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+              </button>
+            </li>
           {{/each}}
         </ul>
       </div>
