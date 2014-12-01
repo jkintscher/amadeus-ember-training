@@ -47,7 +47,7 @@ App.PostsNewController = Ember.Controller.extend({
       var newPost = {
       	id: id,
         title: title,
-        author: "Amadeus",
+        author: username,
         date: new Date(),
         excerpt: excerpt,
         body: body,
@@ -101,7 +101,7 @@ App.PostController = Ember.Controller.extend({
       var msg = prompt("Your comment:", "Hi");
       if (msg != "") {
         this.store.find('post', this.model.id).then(function (post) {
-          var comment = {visiter: "unknown", comment: msg}; 
+          var comment = {visiter: username, comment: msg}; 
           post.get('comments').pushObject(comment);
         }); 
       }
@@ -135,7 +135,7 @@ App.Post.FIXTURES = [
   {
     id: '1',
     title: "Happy birthday Yaohua",
-    author: "Amadeus",
+    author: "Semi",
     date: new Date('2014-10-13'),
     excerpt: "Say happy birthday to Yaohua !",
     body: "Today is the birthday of our dear collegue Yaohua, let's celebrate it !",
@@ -145,7 +145,7 @@ App.Post.FIXTURES = [
   }, {
     id: '2',
     title: "Happy birthday Ali",
-    author: "Amadeus",
+    author: "Dan",
     date: new Date('2015-01-12'),
     excerpt: "Say happy birthday to Ali !",
     body: "Today is the birthday of our dear collegue Ali, let's celebrate it !",
@@ -155,7 +155,7 @@ App.Post.FIXTURES = [
   }, {
     id: '3',
     title: "Happy birthday Joschka",
-    author: "Amadeus",
+    author: "Muriel",
     date: new Date('2014-12-24'),
     excerpt: "Say happy birthday to Joschka !",
     body: "Today is the birthday of our dear collegue Joschka, let's celebrate it !",
@@ -163,3 +163,5 @@ App.Post.FIXTURES = [
       {visiter: "Muriel", comment: "Salut Joschka"}, {visiter: "Santi", comment: "Ola Joschka"}
     ]
   }];
+
+  var username = "Prabhjot";
