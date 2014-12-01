@@ -43,7 +43,6 @@ App.PostRoute = Ember.Route.extend({
 App.PostsNewController = Ember.Controller.extend({
   actions: {
     addNewPost: function (title, excerpt, body) {
-    	debugger;
     	var id = parseInt(this.model.sortBy('id').get('lastObject').id) + 1;
       var newPost = {
       	id: id,
@@ -134,7 +133,7 @@ App.Post = DS.Model.extend({
 
 App.Post.FIXTURES = [
   {
-    id: 1,
+    id: '1',
     title: "Happy birthday Yaohua",
     author: "Amadeus",
     date: new Date('2014-10-13'),
@@ -144,7 +143,7 @@ App.Post.FIXTURES = [
       {visiter: "Muriel", comment: "Salut Yaohua"}, {visiter: "Santi", comment: "Ola Yaohua"}
     ]
   }, {
-    id: 2,
+    id: '2',
     title: "Happy birthday Ali",
     author: "Amadeus",
     date: new Date('2015-01-12'),
@@ -154,7 +153,7 @@ App.Post.FIXTURES = [
       {visiter: "Muriel", comment: "Salut Ali"}, {visiter: "Santi", comment: "Ola Ali"}
     ]
   }, {
-    id: 3,
+    id: '3',
     title: "Happy birthday Joschka",
     author: "Amadeus",
     date: new Date('2014-12-24'),

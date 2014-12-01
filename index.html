@@ -31,8 +31,8 @@
           {{#each post in model}}
             {{#link-to 'post' post.id}}
               <li>
-                <strong>{{post.title}}</strong>
-                <small><em>Posted by {{post.author}} on {{format-date "ll" post.date}}</em></small>
+                <strong>{{post.title}}</strong><br>
+                <small><em>Posted by {{post.author}} on {{format-date "ll" post.date}}</em></small><br>
                 <p><small>{{post.excerpt}}</small></p>
               </li>
             {{/link-to}}
