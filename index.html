@@ -32,7 +32,7 @@
             {{#link-to 'post' post.id}}
               <li>
                 <strong>{{post.title}}</strong>
-                <small><em>Posted by {{post.author}} on {{format-date "LLL" post.date}}</em></small>
+                <small><em>Posted by {{post.author}} on {{format-date "ll" post.date}}</em></small>
                 <p><small>{{post.excerpt}}</small></p>
               </li>
             {{/link-to}}

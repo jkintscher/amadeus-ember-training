@@ -21,6 +21,9 @@ App.IndexRoute = Ember.Route.extend({
 });
 
 App.PostsRoute = Ember.Route.extend({
+	beforeModel: function (posts) {
+		App.Post.FIXTURES = App.Post.FIXTURES.sortBy('date');
+	},
   model: function () {
     return this.store.find('post');
   },
@@ -50,10 +53,10 @@ App.PostsNewController = Ember.Controller.extend({
       };
       var record = this.store.createRecord('post', newPost);
       record.save();
-      this.transitionTo('post', record.id);
+      this.transitionToRoute('post', record.id);
     },
     cancelAdd: function () {
-      this.transitionTo('post', this.model.get('firstObject').id);
+      this.transitionToRoute('post', this.model.get('firstObject').id);
     }
   }
 });
@@ -68,7 +71,7 @@ App.PostController = Ember.Controller.extend({
           post.get('isDeleted');
           post.save();
         });
-        this.transitionTo('posts');
+        this.transitionToRoute('posts');
       } else {
           return;
       }
@@ -90,7 +93,7 @@ App.PostController = Ember.Controller.extend({
         post.set('date', new Date());
       });
       this.set('isEditing', false);
-      this.transitionTo('post', post.id);
+      this.transitionToRoute('post', this.model.id);
     },
     addComment: function () {
       var msg = prompt("Your comment:", "Hi");

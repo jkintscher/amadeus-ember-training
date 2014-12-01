@@ -13,3 +13,6 @@
 	float: right;
 	padding: 0;
 }
+.form-control {
+	margin-bottom: 10px;
+}
