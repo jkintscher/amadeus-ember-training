@@ -99,11 +99,13 @@ App.PostController = Ember.Controller.extend({
     },
     addComment: function () {
       var msg = prompt("Your comment:", "Hi");
-      if (msg != "") {
+      if (msg != "" && msg) {
         this.store.find('post', this.model.id).then(function (post) {
           var comment = {visiter: username, comment: msg}; 
           post.get('comments').pushObject(comment);
         }); 
+      } else {
+        return;
       }
     },
     deleteComment: function (comment) {
