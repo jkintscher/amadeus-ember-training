@@ -1,0 +1,18 @@
+.posts-list {
+	width: 20%;
+	float: left;
+}
+.post-container {
+	width: 78%;
+	float: right;
+}
+.glyphicon {
+	float: right;
+}
+.btn.btn-link {
+	float: right;
+	padding: 0;
+}
+.form-control {
+	margin-bottom: 10px;
+}
