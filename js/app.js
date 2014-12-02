@@ -10,118 +10,13 @@ App.Router.map(function () {
 
     this.resource('post', {path: '/post/:post_id'}, function () {
       this.route('edit');
+      this.route('delete');
+/*      this.resource('comments', function () {
+        this.route('new');
+        this.route('delete');
+      });*/
     });
   });
-});
-
-App.IndexRoute = Ember.Route.extend({
-  redirect: function () {
-    this.transitionTo('posts');
-  }
-});
-
-App.PostsRoute = Ember.Route.extend({
-	beforeModel: function (posts) {
-		App.Post.FIXTURES = App.Post.FIXTURES.sortBy('date');
-	},
-  model: function () {
-    return this.store.find('post');
-  },
-  afterModel: function(posts) {
-    if (posts.get('length') >= 1) {
-      this.transitionTo('post', posts.get('firstObject'));
-    }
-  }
-});
-
-App.PostRoute = Ember.Route.extend({
-  model: function (params) {
-    return this.store.find('post', params.post_id);
-  }
-});
-
-App.PostsNewController = Ember.Controller.extend({
-  actions: {
-    addNewPost: function (title, excerpt, body) {
-    	var id = parseInt(this.model.sortBy('id').get('lastObject').id) + 1;
-      var newPost = {
-      	id: id,
-        title: title,
-        author: username,
-        date: new Date(),
-        excerpt: excerpt,
-        body: body,
-        comments: []
-      };
-      var record = this.store.createRecord('post', newPost);
-      record.save();
-      this.transitionToRoute('post', record.id);
-    },
-    cancelAdd: function () {
-      this.transitionToRoute('post', this.model.get('firstObject').id);
-    }
-  }
-});
-
-App.PostController = Ember.Controller.extend({
-  isEditing: false,
-  actions: {
-    deletePost: function () {
-      if (confirm("Sure to delete this post?")) {
-        this.store.find('post', this.model.id).then(function (post) {
-          post.deleteRecord();
-          post.get('isDeleted');
-          post.save();
-        });
-        this.transitionToRoute('posts');
-      } else {
-          return;
-      }
-    },
-    editPost: function () {
-      this.set('isEditing', true);
-    },
-    cancelEdit: function () {
-      this.set('isEditing', false);
-    },
-    updatePost: function (title, excerpt, body) {
-      this.store.find('post', this.model.id).then(function (post) {
-      	if(title != '' && title != null)
-       		post.set('title', title);
-       	if(excerpt != '' && excerpt != null)
-        	post.set('excerpt', excerpt);
-      	if(body != '' && body != null)
-        	post.set('body', body);
-        post.set('date', new Date());
-      });
-      this.set('isEditing', false);
-      this.transitionToRoute('post', this.model.id);
-    },
-    addComment: function () {
-      var msg = prompt("Your comment:", "Hi");
-      if (msg != "" && msg) {
-        this.store.find('post', this.model.id).then(function (post) {
-          var comment = {visiter: username, comment: msg}; 
-          post.get('comments').pushObject(comment);
-        }); 
-      } else {
-        return;
-      }
-    },
-    deleteComment: function (comment) {
-    	if (confirm("Sure to delete this comment?")) {
-	      this.store.find('post', this.model.id).then(function (post) {
-	        post.get('comments').removeObject(comment);
-	      }); 
-	    } else {
-	    	return;
-	    }
-    }
-  }
-});
-
-Ember.Handlebars.registerBoundHelper('format-date', function(format, date) {
-  return moment(date).format(format);
 });
 
 App.Post = DS.Model.extend({
@@ -135,7 +30,7 @@ App.Post = DS.Model.extend({
 
 App.Post.FIXTURES = [
   {
-    id: '1',
+    id: "1",
     title: "Happy birthday Yaohua",
     author: "Semi",
     date: new Date('2014-10-13'),
@@ -145,7 +40,7 @@ App.Post.FIXTURES = [
       {visiter: "Muriel", comment: "Salut Yaohua"}, {visiter: "Santi", comment: "Ola Yaohua"}
     ]
   }, {
-    id: '2',
+    id: "2",
     title: "Happy birthday Ali",
     author: "Dan",
     date: new Date('2015-01-12'),
@@ -155,7 +50,7 @@ App.Post.FIXTURES = [
       {visiter: "Muriel", comment: "Salut Ali"}, {visiter: "Santi", comment: "Ola Ali"}
     ]
   }, {
-    id: '3',
+    id: "3",
     title: "Happy birthday Joschka",
     author: "Muriel",
     date: new Date('2014-12-24'),
@@ -167,3 +62,7 @@ App.Post.FIXTURES = [
   }];
 
   var username = "Prabhjot";
+
+  Ember.Handlebars.registerBoundHelper('format-date', function(format, date) {
+    return moment(date).format(format);
+  });
