@@ -63,30 +63,16 @@
         {{#link-to 'post.edit'}}
           <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
         {{/link-to}}
-        {{#link-to 'post.delete'}}
+        <button class="btn btn-link" {{action 'deletePost'}}>
           <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-        {{/link-to}}
+        </button>
       </div>
       <div class="panel-body">
         {{model.body}}
       </div>
       <br>
-      <ul class="list-group">
-        <li class="list-group-item">
-          <strong>Comments</strong>
-          <button class="btn btn-link" {{action 'addComment'}}>
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-          </button>
-        </li>
-        {{#each item in model.comments}}
-          <li class="list-group-item">
-            {{item.visiter}}: {{item.comment}}
-            <button class="btn btn-link" {{action 'deleteComment' item}}>
-              <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-            </button>
-          </li>
-        {{/each}}
-      </ul>
+
+      {{ render "post/comments" }}
     </div>
 
     {{ outlet }}
@@ -94,13 +80,34 @@
 
   <script type="text/x-handlebars" id="post/edit">
     <form role="form" class="post-container">
-      {{input type="text" class="form-control" placeholder=model.title value=title}}
-      {{input type="text" class="form-control" placeholder=model.excerpt value=excerpt}}
-      {{textarea class="form-control" placeholder=model.body rows="5" value=body}}
+      {{input type="text" class="form-control" placeholder=title value=title}}
+      {{input type="text" class="form-control" placeholder=excerpt value=excerpt}}
+      {{textarea class="form-control" placeholder=body rows="5" value=body}}
      
       <button class="btn btn-default" {{action 'updatePost' title excerpt body}}>Submit</button>
       <button class="btn btn-default" {{action 'cancelEdit'}}>Cancel</button>
     </form> 
+  </script>
+
+  <script type="text/x-handlebars" id="post/comments">
+    <ul class="list-group">
+      <li class="list-group-item">
+        <strong>Comments</strong>
+        <button class="btn btn-link" {{action 'addComment'}}>
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </button>
+      </li>
+      {{#each item in model.comments}}
+        <li class="list-group-item">
+          {{item.visiter}}: {{item.comment}}
+          <button class="btn btn-link" {{action 'deleteComment' item}}>
+            <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+          </button>
+        </li>
+      {{/each}}
+
+      {{ outlet }}
+    </ul> 
   </script>
 
   <script src="js/libs/jquery-1.10.2.js"></script>

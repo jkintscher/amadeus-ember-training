@@ -36,62 +36,53 @@ App.PostsNewRoute = Ember.Route.extend({
 });
 
 App.PostRoute = Ember.Route.extend({
-  /*model: function (params) {
-    return this.modelFor('posts').findBy('id', params.post_id);
-  },*/
   actions: {
     updatePost: function (title, excerpt, body) {
-      if(!Em.isEmpty(title))
+      if (!Ember.isEmpty(title))
         this.set('title', title);
 
-      if(!Em.isEmpty(excerpt))
+      if (!Ember.isEmpty(excerpt))
         this.set('excerpt', excerpt);
 
-      if(!Em.isEmpty(body))
+      if (!Ember.isEmpty(body))
         this.set('body', body);
 
       var self = this;
-      debugger;
       this.modelFor('post').save().then(function () {
         self.transitionTo('post', self.modelFor('post'));
       });
     },
     deletePost: function () {
-      this.modelFor('post').deleteRecord();
-      this.modelFor('post').save().then(function () {
-        self.transitionToRoute('posts');
+      var self = this;
+      post.deleteRecord();
+      this.modelFor('posts').save().then(function () {
+        self.transitionTo('posts');
       });
-    },
-    addComment: function () {
-      var comment = {visiter: username, comment: msg}; 
-      this.modelFor('post').get('comments').pushObject(comment);
-      this.modelFor('post').save();
-    },
-    deleteComment: function (comment) {
-      this.modelFor('post').get('comments').removeObject(comment);
-      this.modelFor('post').save();
     }
   }
 });
 
 App.PostEditRoute = Ember.Route.extend({
-  model: function () {
-    return this.modelFor('post');
+  actions: {
+    cancelEdit: function () {
+      this.transitionTo('post', this.modelFor('post'));
+    }
   }
 });
 
-/*App.PostDeleteRoute = Ember.Route.extend({
-
-});*/
-
-/*App.PostCommentsRoute = Ember.Route.extend({
-
+App.PostCommentsRoute = Ember.Route.extend({
+  actions: {
+    addComment: function () {
+      var msg = prompt("Your comment:", "Hi");
+      if (!Ember.isEmpty(msg)) {
+        var comment = {visiter: username, comment: msg}; 
+        this.get('model').pushObject(comment);
+        this.modelFor('post').save();
+      }
+    },
+    deleteComment: function (comment) {
+      this.get('model').removeObject(comment);
+      this.modelFor('post').save();
+    }
+  }
 });
-
-App.PostCommentsNewRoute = Ember.Route.extend({
-
-});
-
-App.PostCommentsDeleteRoute = Ember.Route.extend({
-
-});*/
