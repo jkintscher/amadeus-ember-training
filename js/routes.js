@@ -9,8 +9,8 @@ App.PostsRoute = Ember.Route.extend({
     return this.store.find('post');
   },
   redirect: function() {
-    if (this.get('model.length') >= 1) {
-      this.transitionTo('post', this.get('model.firstObject'));
+      if (this.modelFor('posts').get('length') >= 1) {
+      this.transitionTo('post', this.modelFor('posts').get('firstObject'));
     }
   }
 });
