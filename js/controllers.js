@@ -31,11 +31,6 @@ App.PostController = Ember.Controller.extend({
       if (confirm("Sure to delete this post?")) {
         return true;
       }
-    },
-    deleteComment: function (comment) {
-      if (confirm("Sure to delete this comment?")) {
-        return true;
-      }
     }
   }
 });

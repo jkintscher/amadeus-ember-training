@@ -8,7 +8,7 @@ App.PostsRoute = Ember.Route.extend({
   model: function () {
     return this.store.find('post');
   },
-  redirect: function() {
+  redirect: function () {
     if (this.modelFor('posts').get('length') >= 1) {
       this.transitionTo('post', this.modelFor('posts').get('firstObject'));
     }
@@ -21,37 +21,18 @@ App.PostsNewRoute = Ember.Route.extend({
       var post = this.modelFor('posts.new');
       var self = this;
       this.store.createRecord('post', post)
-          .save()
-          .then(function(record) {
-            self.transitionTo('post', record);
-          });
+              .save()
+              .then(function (record) {
+                self.transitionTo('post', record);
+              });
     }
   },
-
-  model: function() {
+  model: function () {
     return {
       author: username,
       date: new Date(),
       comments: []
     };
-  }
-});
-
-App.PostRoute = Ember.Route.extend({
-  actions: {
-    addComment: function () {
-      var msg = prompt("Your comment:", "Hi");
-      if (!Ember.isEmpty(msg)) {
-        var post = this.modelFor('post'),
-            comment = { visiter: username, comment: msg };
-        post.get('comments').pushObject(comment);
-        post.save();
-      }
-    },
-    deleteComment: function (comment) {
-      this.modelFor('post').get('comments').removeObject(comment);
-      this.modelFor('post').save();
-    }
   }
 });
 
@@ -74,11 +55,52 @@ App.PostDeleteRoute = Ember.Route.extend({
   actions: {
     deletePost: function () {
       var self = this,
-          post = this.modelFor('post');
+              post = this.modelFor('post');
       post.deleteRecord();
       post.save().then(function () {
         self.transitionTo('posts');
       });
+    }
+  }
+});
+
+App.CommentAddRoute = Ember.Route.extend({
+  model: function () {
+    var comment = {
+      visiter: username,
+      comment: ''
+    };
+    return comment;
+  },
+  actions: {
+    addComment: function () {
+      var route = this;
+      var post = this.modelFor('post');
+      post.get('comments').push(this.modelFor('comment.add'));
+      post.save().then(function () {
+        route.transitionTo('post', post);
+      });
+    },
+    cancelAdd: function () {
+      this.transitionTo('post');
+    }
+  }
+});
+
+App.CommentDeleteRoute = Ember.Route.extend({
+  actions: {
+    deleteComment: function () {
+      var route = this;
+      // this.modelFor('post') not work !!! post id undefined
+      var post = this.modelFor('post.index');
+      post.get('comments').removeObject(this.modelFor('comment.delete'));
+      post.save().then(function () {
+        route.transitionTo('post', post);
+      });
+    },
+    cancelDelete: function () {
+      var post = this.modelFor('post.index');
+      this.transitionTo('post', post);
     }
   }
 });

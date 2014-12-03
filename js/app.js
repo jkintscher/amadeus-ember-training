@@ -8,9 +8,13 @@ App.Router.map(function () {
   this.resource('posts', function () {
     this.route('new');
 
-    this.resource('post', {path: '/post/:post_id'}, function () {
+    this.resource('post', {path: '/:post_id'}, function () {
       this.route('edit');
       this.route('delete');
+      this.resource('comment', function () {
+        this.route('add');
+        this.route('delete');
+      })
     });
   });
 });
@@ -57,8 +61,9 @@ App.Post.FIXTURES = [
     ]
   }];
 
-  var username = "Prabhjot";
 
-  Ember.Handlebars.registerBoundHelper('format-date', function(format, date) {
-    return moment(date).format(format);
-  });
+var username = "Prabhjot";
+
+Ember.Handlebars.registerBoundHelper('format-date', function (format, date) {
+  return moment(date).format(format);
+});
