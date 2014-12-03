@@ -9,7 +9,7 @@ App.PostsRoute = Ember.Route.extend({
     return this.store.find('post');
   },
   redirect: function() {
-      if (this.modelFor('posts').get('length') >= 1) {
+    if (this.modelFor('posts').get('length') >= 1) {
       this.transitionTo('post', this.modelFor('posts').get('firstObject'));
     }
   }
@@ -17,54 +17,35 @@ App.PostsRoute = Ember.Route.extend({
 
 App.PostsNewRoute = Ember.Route.extend({
   actions: {
-    addNewPost: function (title, excerpt, body) {
-      var id = parseInt(this.modelFor('posts').sortBy('id').get('lastObject.id'), 10) + 1;
-      var newPost = {
-        id: id,
-        title: title,
-        author: username,
-        date: new Date(),
-        excerpt: excerpt,
-        body: body,
-        comments: []
-      };
-      var record = this.store.createRecord('post', newPost);
-      record.save();
-      this.transitionTo('post', record);
+    addNewPost: function () {
+      var post = this.modelFor('posts.new');
+      var self = this;
+      this.store.createRecord('post', post)
+          .save()
+          .then(function(record) {
+            self.transitionTo('post', record);
+          });
     }
+  },
+
+  model: function() {
+    return {
+      author: username,
+      date: new Date(),
+      comments: []
+    };
   }
 });
 
 App.PostRoute = Ember.Route.extend({
   actions: {
-    updatePost: function (title, excerpt, body) {
-      if (!Ember.isEmpty(title))
-        this.set('title', title);
-
-      if (!Ember.isEmpty(excerpt))
-        this.set('excerpt', excerpt);
-
-      if (!Ember.isEmpty(body))
-        this.set('body', body);
-
-      var self = this;
-      this.modelFor('post').save().then(function () {
-        self.transitionTo('post', self.modelFor('post'));
-      });
-    },
-    deletePost: function () {
-      var self = this;
-      this.modelFor('post').deleteRecord();
-      this.modelFor('post').save().then(function () {
-        self.transitionTo('posts');
-      });
-    },
     addComment: function () {
       var msg = prompt("Your comment:", "Hi");
       if (!Ember.isEmpty(msg)) {
-        var comment = {visiter: username, comment: msg}; 
-        this.modelFor('post').get('comments').pushObject(comment);
-        this.modelFor('post').save();
+        var post = this.modelFor('post'),
+            comment = { visiter: username, comment: msg };
+        post.get('comments').pushObject(comment);
+        post.save();
       }
     },
     deleteComment: function (comment) {
@@ -76,8 +57,28 @@ App.PostRoute = Ember.Route.extend({
 
 App.PostEditRoute = Ember.Route.extend({
   actions: {
+    updatePost: function () {
+      var self = this;
+      this.modelFor('post').save().then(function () {
+        self.transitionTo('post', self.modelFor('post'));
+      });
+    },
     cancelEdit: function () {
+      this.modelFor('post').rollback();
       this.transitionTo('post', this.modelFor('post'));
+    }
+  }
+});
+
+App.PostDeleteRoute = Ember.Route.extend({
+  actions: {
+    deletePost: function () {
+      var self = this,
+          post = this.modelFor('post');
+      post.deleteRecord();
+      post.save().then(function () {
+        self.transitionTo('posts');
+      });
     }
   }
 });

@@ -6,16 +6,22 @@ App.PostsController = Ember.Controller.extend({
 
 App.PostsNewController = Ember.Controller.extend({
   actions: {
-    addNewPost: function (title, excerpt, body) {
-      if (!Ember.isEmpty(title) && !Ember.isEmpty(excerpt) && !Ember.isEmpty(body)) {
+    addNewPost: function () {
+      if (this.validate()) {
         return true;
       } else {
-        alert("Should not be empty");
+        alert('Should not be empty');
       }
     },
     cancelAdd: function () {
-      this.transitionToRoute('post', this.model.get('firstObject'));
+      this.transitionToRoute('posts');
     }
+  },
+  validate: function() {
+    if (Ember.isEmpty(this.get('model.title'))) return false;
+    if (Ember.isEmpty(this.get('model.excerpt'))) return false;
+    if (Ember.isEmpty(this.get('model.body'))) return false;
+    return true;
   }
 });
 
