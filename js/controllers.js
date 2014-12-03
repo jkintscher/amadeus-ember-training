@@ -1,7 +1,7 @@
 App.PostsController = Ember.Controller.extend({
   sortedPosts: function () {
     return this.model.sortBy('date');
-  }.property('model')
+  }.property('model.@each')
 });
 
 App.PostsNewController = Ember.Controller.extend({
@@ -14,7 +14,7 @@ App.PostsNewController = Ember.Controller.extend({
       }
     },
     cancelAdd: function () {
-      this.transitionToRoute('posts');
+      this.transitionToRoute('post', this.model.get('firstObject'));
     }
   }
 });
@@ -25,7 +25,17 @@ App.PostController = Ember.Controller.extend({
       if (confirm("Sure to delete this post?")) {
         return true;
       }
+    },
+    deleteComment: function (comment) {
+      if (confirm("Sure to delete this comment?")) {
+        return true;
+      }
     }
   }
 });
 
+/*
+in controller, use this.model, transitionToRoute()
+in route, use this.modelFor(), transitionTo()
+model, model.@each, model.[]
+*/

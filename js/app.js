@@ -10,8 +10,8 @@ App.Router.map(function () {
 
     this.resource('post', {path: '/post/:post_id'}, function () {
       this.route('edit');
-      //this.route('delete');
-      this.route('comments');
+      // this.route('delete');
+      // this.route('comments');
     });
   });
 });

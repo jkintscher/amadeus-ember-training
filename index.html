@@ -72,7 +72,22 @@
       </div>
       <br>
 
-      {{ render "post/comments" }}
+      <ul class="list-group">
+        <li class="list-group-item">
+          <strong>Comments</strong>
+          <button class="btn btn-link" {{action 'addComment'}}>
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+          </button>
+        </li>
+        {{#each item in model.comments}}
+          <li class="list-group-item">
+            {{item.visiter}}: {{item.comment}}
+            <button class="btn btn-link" {{action 'deleteComment' item}}>
+              <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+            </button>
+          </li>
+        {{/each}}
+      </ul> 
     </div>
 
     {{ outlet }}
@@ -87,27 +102,6 @@
       <button class="btn btn-default" {{action 'updatePost' title excerpt body}}>Submit</button>
       <button class="btn btn-default" {{action 'cancelEdit'}}>Cancel</button>
     </form> 
-  </script>
-
-  <script type="text/x-handlebars" id="post/comments">
-    <ul class="list-group">
-      <li class="list-group-item">
-        <strong>Comments</strong>
-        <button class="btn btn-link" {{action 'addComment'}}>
-          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-        </button>
-      </li>
-      {{#each item in model.comments}}
-        <li class="list-group-item">
-          {{item.visiter}}: {{item.comment}}
-          <button class="btn btn-link" {{action 'deleteComment' item}}>
-            <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-          </button>
-        </li>
-      {{/each}}
-
-      {{ outlet }}
-    </ul> 
   </script>
 
   <script src="js/libs/jquery-1.10.2.js"></script>

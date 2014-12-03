@@ -54,10 +54,22 @@ App.PostRoute = Ember.Route.extend({
     },
     deletePost: function () {
       var self = this;
-      post.deleteRecord();
-      this.modelFor('posts').save().then(function () {
+      this.modelFor('post').deleteRecord();
+      this.modelFor('post').save().then(function () {
         self.transitionTo('posts');
       });
+    },
+    addComment: function () {
+      var msg = prompt("Your comment:", "Hi");
+      if (!Ember.isEmpty(msg)) {
+        var comment = {visiter: username, comment: msg}; 
+        this.modelFor('post').get('comments').pushObject(comment);
+        this.modelFor('post').save();
+      }
+    },
+    deleteComment: function (comment) {
+      this.modelFor('post').get('comments').removeObject(comment);
+      this.modelFor('post').save();
     }
   }
 });
@@ -66,23 +78,6 @@ App.PostEditRoute = Ember.Route.extend({
   actions: {
     cancelEdit: function () {
       this.transitionTo('post', this.modelFor('post'));
-    }
-  }
-});
-
-App.PostCommentsRoute = Ember.Route.extend({
-  actions: {
-    addComment: function () {
-      var msg = prompt("Your comment:", "Hi");
-      if (!Ember.isEmpty(msg)) {
-        var comment = {visiter: username, comment: msg}; 
-        this.get('model').pushObject(comment);
-        this.modelFor('post').save();
-      }
-    },
-    deleteComment: function (comment) {
-      this.get('model').removeObject(comment);
-      this.modelFor('post').save();
     }
   }
 });
