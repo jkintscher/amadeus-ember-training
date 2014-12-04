@@ -76,7 +76,7 @@ App.CommentAddRoute = Ember.Route.extend({
     addComment: function () {
       var route = this;
       var post = this.modelFor('post');
-      post.get('comments').push(this.modelFor('comment.add'));
+      post.get('comments').pushObject(this.modelFor('comment.add'));
       post.save().then(function () {
         route.transitionTo('post', post);
       });
