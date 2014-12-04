@@ -30,7 +30,7 @@ App.PostsNewRoute = Ember.Route.extend({
   model: function () {
     return {
       author: username,
-      date: new Date(),
+      date: moment().format('YYYY-MM-DD'),
       comments: []
     };
   }
