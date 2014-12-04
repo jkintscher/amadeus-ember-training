@@ -1,7 +1,7 @@
 App.PostsController = Ember.Controller.extend({
   sortedPosts: function () {
-    return this.model.sortBy('date');
-  }.property('model.@each')
+    return this.get('model').sortBy('date');
+  }.property('model.@each.date')
 });
 
 App.PostsNewController = Ember.Controller.extend({
