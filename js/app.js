@@ -22,7 +22,7 @@ App.Router.map(function () {
 App.Post = DS.Model.extend({
   title: DS.attr('string'),
   author: DS.attr('string'),
-  date: DS.attr('date'),
+  date: DS.attr('string'),
   excerpt: DS.attr('string'),
   body: DS.attr('string'),
   comments: DS.attr()
@@ -33,7 +33,7 @@ App.Post.FIXTURES = [
     id: "1",
     title: "Happy birthday Yaohua",
     author: "Semi",
-    date: new Date('2014-10-13'),
+    date: '2014-10-13',
     excerpt: "Say happy birthday to Yaohua !",
     body: "Today is the birthday of our dear collegue Yaohua, let's celebrate it !",
     comments: [
@@ -43,7 +43,7 @@ App.Post.FIXTURES = [
     id: "2",
     title: "Happy birthday Ali",
     author: "Dan",
-    date: new Date('2015-01-12'),
+    date: '2015-01-12',
     excerpt: "Say happy birthday to Ali !",
     body: "Today is the birthday of our dear collegue Ali, let's celebrate it !",
     comments: [
@@ -53,7 +53,7 @@ App.Post.FIXTURES = [
     id: "3",
     title: "Happy birthday Joschka",
     author: "Muriel",
-    date: new Date('2014-12-24'),
+    date: '2014-12-24',
     excerpt: "Say happy birthday to Joschka !",
     body: "Today is the birthday of our dear collegue Joschka, let's celebrate it !",
     comments: [
